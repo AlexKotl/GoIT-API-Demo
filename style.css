@@ -10,6 +10,11 @@ td, th {
 
 thead td {
     cursor: pointer !important;
+    color: #063c55 !important;
+
+}
+thead td span {
+    border-bottom: 1px dotted grey !important;
 }
 
 .main-container {

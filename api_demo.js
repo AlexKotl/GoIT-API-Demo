@@ -7,9 +7,7 @@ var api = (function(table_el) {
 
     return {
         init: function() {
-            this.getJson();
-            this.attachSorter();
-            this.render();
+            this.getJson().attachSorter().render();
 
             return this;
         },
@@ -43,21 +41,9 @@ var api = (function(table_el) {
 
         },
 
-        onSort: function(e) {
-            console.log('sorting...' + e);
-
-            data.sort(function(a, b) {
-
-            });
-
-            this.render();
-
-            return this;
-        },
-
         render: function() {
             table.getElementsByTagName('tbody')[0].innerHTML = '';
-            
+
             data.forEach(function(el) {
                 var tr = document.createElement('tr');
                 tr.innerHTML =
@@ -66,17 +52,32 @@ var api = (function(table_el) {
                     + "<td><b>" + el.Title + "</b></td>"
                     + "<td>" + el.Country + "</td>"
                     + "<td>" + el.imdbRating + "</td>";
-                table.appendChild(tr);
+                table.getElementsByTagName('tbody')[0].appendChild(tr);
             });
 
             return this;
         },
 
+        onSort: function(e) {
+            var column_name = e.target.getAttribute('data-name');
+            console.log('sorting...' + column_name);
+
+            data.sort(function(a, b) {
+                return a[column_name] < b[column_name];
+            });
+
+            console.log(data);
+            this.render();
+
+            return this;
+        },
+
+
+
         attachSorter: function() {
-            console.log(table.getElementsByTagName('thead')[0].getElementsByTagName('td'));
             var tds = table.getElementsByTagName('thead')[0].getElementsByTagName('td');
             for (var i=0; i<tds.length; i++) {
-                tds[i].addEventListener('click', this.onSort);
+                tds[i].addEventListener('click', this.onSort.bind(this), true);
             }
 
             return this;
