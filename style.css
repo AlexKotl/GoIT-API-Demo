@@ -4,6 +4,14 @@ body {
     font-family: 'Quicksand', sans-serif;
 }
 
+td, th {
+    vertical-align: middle !important;
+}
+
+thead td {
+    cursor: pointer !important;
+}
+
 .main-container {
     margin: 100px auto;
     width: 700px;
